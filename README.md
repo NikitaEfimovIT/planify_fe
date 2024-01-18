@@ -1,1 +1,1 @@
-#This is the frontend repo for Planify App
+# This is the frontend repo for Planify App
