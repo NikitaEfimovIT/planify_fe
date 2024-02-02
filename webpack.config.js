@@ -1,7 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-module.exports = {
+
+var config = {
   mode: "development",
   entry: ["./src/index.tsx"],
   devtool: "inline-source-map",
@@ -27,7 +28,7 @@ module.exports = {
       },
     ],
   },
-  watch: true,
+  watch: false,
   resolve: {
     extensions: [".*", ".js", ".jsx", ".ts", ".tsx"],
     alias: {
@@ -51,4 +52,10 @@ module.exports = {
     historyApiFallback: true,
     port: 3006,
   },
+}
+
+module.exports =(env, argv) => {
+  config.mode=argv.mode || "development"
+  config.watch=argv.mode!=="production"
+  return config
 };
