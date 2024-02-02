@@ -21,6 +21,7 @@
     "isolatedModules": true,
     "downlevelIteration": true,
     "strictNullChecks": false,
+    "outDir": "dist",
     //"noEmit": true,
     "jsx": "react",
     "baseUrl": "./",
