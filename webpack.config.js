@@ -12,7 +12,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         type: "asset",
       },
       {
@@ -49,6 +49,6 @@ module.exports = {
     static: path.resolve(__dirname, "dist"),
     hot: true,
     historyApiFallback: true,
-    port: 3002,
+    port: 3006,
   },
 };
