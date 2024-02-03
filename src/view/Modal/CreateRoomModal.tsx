@@ -1,9 +1,10 @@
-import { Button, Card, CardActions, CardContent, CardHeader, Dialog, TextField } from "@mui/material";
-import React from "react";
+import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress, Dialog, TextField } from "@mui/material";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_MODAL_CREATE } from "@src/store/room/roomTypes";
 import { makeStyles } from "tss-react/mui";
 import { createRoom } from "@src/store/room/roomActions";
+import useDebounce from "@src/hooks/useDebounce";
 
 const useStyles = makeStyles()((theme)=>({
   root: {
@@ -23,12 +24,21 @@ const useStyles = makeStyles()((theme)=>({
     display: "flex",
     justifyContent: "flex-end",
     flexDirection: "row"
-
+  },
+  button:{
+    width: "107px",
+    height:"42px"
   }
 }))
 
 export const CreateRoomModal = () =>{
   const open = useSelector((state:any) => state.room.open)
+
+  const isLoading = useSelector((state:any)=>state.room.isLoading)
+
+  const room = useSelector((state: any)=> state.room.room)
+
+  const isLoadingDebounced = useDebounce(isLoading, 300)
 
   const {classes} = useStyles()
 
@@ -41,6 +51,12 @@ export const CreateRoomModal = () =>{
     dispatch(createRoom())
   }
 
+  useEffect(() => {
+    if(room){
+      window.location.href="/schedule"
+    }
+  }, [room]);
+
   return <Dialog open={open} onClose={closeModal}>
     <Card className={classes.root}>
       <CardContent className={classes.card}>
@@ -50,11 +66,13 @@ export const CreateRoomModal = () =>{
         }}/>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button variant={"outlined"} size={"large"} onClick={closeModal}>
+        <Button className={classes.button} variant={"outlined"} size={"large"} onClick={closeModal}>
           Cancel
         </Button>
-        <Button variant={"contained"} size={"large"} onClick={onCreateRoom}>
-          Create
+        <Button className={classes.button} variant={"contained"} disabled={
+          isLoadingDebounced
+        } size={"large"} onClick={onCreateRoom}>
+          {isLoadingDebounced ? <CircularProgress /> :"Create"}
         </Button>
       </CardActions>
     </Card>

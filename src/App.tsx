@@ -3,6 +3,8 @@ import { makeStyles } from "tss-react/mui";
 import { Container } from "@mui/material";
 import { HomePage } from "@src/view/HomePage/HomePage";
 import { CreateRoomModal } from "@src/view/Modal/CreateRoomModal";
+import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
+import { SchedulePage } from "@src/view/SchedulePage/SchedulePage";
 
 
 const useStyles = makeStyles()(theme=>({
@@ -14,12 +16,20 @@ const useStyles = makeStyles()(theme=>({
 
 function App() {
   const {classes} = useStyles()
-
+  const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage/>
+  },
+    {path:"/schedule", element: <SchedulePage/>}
+  ])
   return (
+
     <Container className={classes.root}>
-      <HomePage/>
+      <RouterProvider router={router}/>
       <CreateRoomModal/>
     </Container>
+
   );
 }
 

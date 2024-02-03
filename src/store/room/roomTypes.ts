@@ -1,10 +1,10 @@
 export const CREATE_ROOM_S = "CREATE_ROOM_S"
 
 export const CREATE_ROOM_R = "CREATE_ROOM_r"
-export const GET_ROOM= "GET_ROOM"
+export const JOIN_ROOM= "JOIN_ROOM"
 
 export const OPEN_MODAL_CREATE = "OPEN_MODAL_CREATE"
-export const OPEN_MODAL_GET = "OPEN_MODAL_GET"
+export const OPEN_MODAL_JOIN = "OPEN_MODAL_GET"
 export interface Room{
   id: string;
 }
@@ -14,6 +14,7 @@ export interface DefaultState{
   isLoading: false;
   error: false;
   open: false
+  responses:any
 }
 
 export interface CreateRoomR{
@@ -25,8 +26,8 @@ export interface CreateRoomS{
   payload: Room
 }
 
-export interface GetRoom{
-  type: typeof GET_ROOM;
+export interface JoinRoom{
+  type: typeof JOIN_ROOM;
   payload: Room
 }
 
