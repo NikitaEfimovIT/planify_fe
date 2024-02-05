@@ -4,7 +4,8 @@ const defaultState:DefaultState = {
   room: null,
   isLoading: false,
   error: false,
-  open: false
+  open: false,
+  responses: null
 }
 
 export const roomReducer = ((state=defaultState, action:any)=>{
@@ -12,9 +13,8 @@ export const roomReducer = ((state=defaultState, action:any)=>{
     case CREATE_ROOM_R:
       return {...state, isLoading: true}
     case CREATE_ROOM_S:
-      return {...state, isLoading: false, room: action.payload}
+      return {...state, isLoading: false, room: action.payload, open: false}
     case OPEN_MODAL_CREATE:
-      console.log("in create")
       return {...state, open: !state.open}
     default:
       return state
