@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress, Dialog, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_MODAL_CREATE } from "@src/store/room/roomTypes";
 import { makeStyles } from "tss-react/mui";
@@ -38,6 +38,8 @@ export const CreateRoomModal = () =>{
 
   const room = useSelector((state: any)=> state.room.room)
 
+  const [roomName, setRoomName] = useState("")
+
   const isLoadingDebounced = useDebounce(isLoading, 300)
 
   const {classes} = useStyles()
@@ -48,7 +50,7 @@ export const CreateRoomModal = () =>{
   }
 
   const onCreateRoom = () => {
-    dispatch(createRoom())
+    dispatch(createRoom(roomName))
   }
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export const CreateRoomModal = () =>{
     <Card className={classes.root}>
       <CardContent className={classes.card}>
         <h2>Please provide your room name</h2>
-        <TextField variant={"outlined"} label={"Party name"} placeholder={"ex. Best party ever"} size={"medium"} fullWidth InputLabelProps={{
+        <TextField variant={"outlined"} label={"Party name"} placeholder={"ex. Best party ever"} size={"medium"} onChange={(event)=>setRoomName(event.target.value)} fullWidth InputLabelProps={{
           shrink: true,
         }}/>
       </CardContent>

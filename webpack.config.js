@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 var config = {
   mode: "development",
@@ -44,6 +45,11 @@ var config = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({ template: "./public/index.html", filename: "index.html", title: "Webpack App" }),
+    new CopyWebpackPlugin({
+      patterns:[
+        {from: "./public/_redirects", to: path.resolve(__dirname, "dist")}
+      ]
+    })
   ],
 
   devServer: {
