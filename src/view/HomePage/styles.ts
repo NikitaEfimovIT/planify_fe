@@ -8,7 +8,6 @@ export const useStyles = makeStyles()(theme=>({
     alignItems: "center",
     justifyContent:"center",
     flexDirection: "column",
-    backgroundImage: "url('images/main_screen.svg')"
   },
   buttonContainer: {
     display: "flex",
