@@ -44,10 +44,15 @@ var config = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({ template: "./public/index.html", filename: "index.html", title: "Webpack App" }),
+    new HtmlWebpackPlugin({ template: "./public/index.html", filename: "index.html", title: "Planify", favicon: "./public/favicon.svg" }),
     new CopyWebpackPlugin({
       patterns:[
         {from: "./public/_redirects", to: path.resolve(__dirname, "dist")}
+      ]
+    }),
+    new CopyWebpackPlugin({
+      patterns:[
+        {from: "./public/favicon.svg", to: path.resolve(__dirname, "dist")}
       ]
     })
   ],

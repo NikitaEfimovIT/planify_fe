@@ -18,8 +18,11 @@ export const appTheme = createTheme({
       contrastText: "#2d862d"
     },
     error: {
-      main: "#ecc6c6",
+      main: "#bc1212",
       contrastText: "#862d2d",
+    },
+    background:{
+      default:"#f0eff1"
     }
   },
   components:{
