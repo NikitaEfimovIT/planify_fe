@@ -8,14 +8,21 @@ body {
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
-  background-image: url("images/main_screen.svg");
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
 
+.body_home{
+  background-image: url("images/main_screen.svg");
   @media (width <= 700px) {
     background-image: url("images/main_screen_mobile.svg");
   }
+}
+
+.body_all{
+  background-color: #f0eff1;
 }
 
 #root{
