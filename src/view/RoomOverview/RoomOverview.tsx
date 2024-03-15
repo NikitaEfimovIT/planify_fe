@@ -1,16 +1,30 @@
-import { Button, CircularProgress, Container, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import React, { useEffect } from "react";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Fab,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Room } from "@src/store/room/roomTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "tss-react/mui";
 import { joinRoom } from "@src/store/room/roomActions";
 import { useNavigate } from "react-router-dom";
 import useDebounce from "@src/hooks/useDebounce";
+import { CHANGE_SHARE_MODAL_STATE } from "@src/store/modals/modalsTypes";
+import { ShareModal } from "@src/view/Modal/ShareModal";
+import IosShareIcon from "@mui/icons-material/IosShare";
+import { TimeTable } from "@src/components/TimeTable/TimeTable";
+import { OPEN_RESPONSE_MODAL } from "@src/store/response/responseTypes";
 
 const useStyles = makeStyles()((theme) => ({
   root: {
     width: "100%",
-    height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -45,7 +59,12 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    height: "70%",
+    height: "90%",
+  },
+  headerContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
@@ -55,6 +74,11 @@ export const RoomOverview = () => {
   const debouncedRoom = useDebounce(room, 600);
   const dispatch = useDispatch<any>();
   const { classes } = useStyles();
+
+  const isSuccess = useSelector((state: any) => state.response.success);
+  const debouncedIsSuccess = useDebounce(isSuccess, 300);
+
+  const [isSelectedMode, setIsSelectedMode] = useState(false);
 
   const navigation = useNavigate();
   useEffect(() => {
@@ -67,48 +91,39 @@ export const RoomOverview = () => {
     }
   }, [room]);
 
+  useEffect(() => {
+    if (debouncedIsSuccess) {
+      setIsSelectedMode((prevState) => !prevState);
+      dispatch(joinRoom(parseInt(String(room.key))));
+    }
+  }, [debouncedIsSuccess]);
+
   return (
     <Container className={classes.root}>
       {debouncedRoom ? (
         <>
           <section className={classes.topSection}>
-            <h1 className={classes.roomName}>{room.name}</h1>
-            <Button variant={"contained"}>Select time</Button>
+            <div className={classes.headerContainer}>
+              <h1 className={classes.roomName}>{room.name}</h1>
+              <Button
+                variant={"outlined"}
+                style={{ height: "40px", marginLeft: "1em" }}
+                onClick={() => dispatch({ type: CHANGE_SHARE_MODAL_STATE })}
+              >
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-evenly" }}>
+                  <span style={{ marginRight: "0.5em" }}>Share</span> <IosShareIcon fontSize={"small"} />
+                </div>
+              </Button>
+            </div>
+            <Button
+              variant={isSelectedMode ? "outlined" : "contained"}
+              onClick={() => setIsSelectedMode((prevState) => !prevState)}
+            >
+              {isSelectedMode ? "Cancel selection mode" : "Select time"}
+            </Button>
           </section>
           <section className={classes.tableSection}>
-            {room.responses.length ? (
-              <Table>
-                <TableHead>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Available time</TableCell>
-                </TableHead>
-                <TableBody>
-                  {room.responses.map((response: any, index) => {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell>{response.name}</TableCell>
-                        <TableCell>
-                          {Object.keys(response.availableTimes).map((date) => {
-                            return (
-                              <div>
-                                <span>{date}:</span>
-                                <div>
-                                  {response.availableTimes[date].map((time: string) => {
-                                    return <p>{time}</p>;
-                                  })}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            ) : (
-              <h1 className={classes.noResponses}>There are no responses</h1>
-            )}
+            <TimeTable isSelectMode={isSelectedMode} room={room} />
           </section>
         </>
       ) : (
@@ -117,6 +132,7 @@ export const RoomOverview = () => {
           <h1 style={{ fontWeight: 400 }}>Please wait...</h1>
         </div>
       )}
+      <ShareModal />
     </Container>
   );
 };

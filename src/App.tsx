@@ -9,6 +9,7 @@ import { RoomModal } from "@src/view/Modal/RoomModal";
 import { useErrorBoundary } from "react-error-boundary";
 import { Header } from "@src/components/Header/Header";
 import { Imprint } from "@src/view/Imprint/Imprint";
+import { RoomLobbyForInvited } from "@src/view/RoomLobbyForInvited/RoomLobbyForInvited";
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -45,6 +46,7 @@ function App() {
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/room-overview" element={<RoomOverview />} />
           <Route path="/imprint" element={<Imprint />} />
+          <Route path={"/invite/:key"} element={<RoomLobbyForInvited />} />
         </Routes>
         <RoomModal />
       </Container>
