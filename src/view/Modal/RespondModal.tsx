@@ -5,6 +5,7 @@ import { OPEN_RESPONSE_MODAL } from "@src/store/response/responseTypes";
 import { makeStyles } from "tss-react/mui";
 import { makeResponse } from "@src/store/response/responseActions";
 import useDebounce from "@src/hooks/useDebounce";
+import { v4 } from "uuid";
 
 const useStyles = makeStyles()((theme) => ({
   root: {
@@ -49,10 +50,9 @@ export const RespondModal: React.FC<{ responses: any; roomID: number }> = ({ res
     const data = {
       number: roomID.toString(),
       response: {
-        responseID: {
-          name: name,
-          availableTimes: groupedResponses,
-        },
+        responseID: v4(),
+        name: name,
+        availableTimes: groupedResponses,
       },
     };
 
