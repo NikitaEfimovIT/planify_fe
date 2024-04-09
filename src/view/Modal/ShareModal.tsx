@@ -47,8 +47,8 @@ export const ShareModal = () => {
       <form className={classes.root}>
         <h3 style={{ marginBlockStart: 0 }}>Share access to this room with your friends</h3>
         <div className={classes.copyContainer}>
-          <TextField disabled size={"small"} fullWidth value={`${devUrl}/${room?.key}`}></TextField>
-          <CopyToClipboard text={`${devUrl}/${room?.key}`} onCopy={onCopyText}>
+          <TextField disabled size={"small"} fullWidth value={`${prodUrl}/${room?.key}`}></TextField>
+          <CopyToClipboard text={`${prodUrl}/${room?.key}`} onCopy={onCopyText}>
             <Button variant={"contained"}>Copy</Button>
           </CopyToClipboard>
         </div>

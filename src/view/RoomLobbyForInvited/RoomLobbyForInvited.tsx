@@ -14,7 +14,7 @@ export const RoomLobbyForInvited = () => {
   const debouncedRoom = useDebounce(roomInfo, 500);
 
   useEffect(() => {
-    console.log(parseInt(key));
+    // console.log(parseInt(key));
     dispatch(joinRoom(parseInt(key)));
   }, []);
 

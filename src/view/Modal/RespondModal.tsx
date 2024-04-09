@@ -40,7 +40,7 @@ export const RespondModal: React.FC<{ responses: any; roomID: number }> = ({ res
   }, {});
 
   const handleSubmit = (e: any) => {
-    console.log("here");
+    // console.log("here");
     e.preventDefault();
     if (!name) {
       setError(true);

@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 export const appTheme = createTheme({
   palette: {
     primary: {
-      dark: "#632D86",
+      dark: "#472060",
       main: "#C6A0DF",
       light: "#f4ecf9",
     },
@@ -36,6 +36,13 @@ export const appTheme = createTheme({
         outlined: {
           color: "#632D86",
           borderColor: "#632D86",
+        },
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          color: "#472060",
         },
       },
     },

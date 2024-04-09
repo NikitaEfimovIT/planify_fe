@@ -8,6 +8,7 @@ import apiClientService from "@src/axios/ApiClientService";
 
 export const makeResponse = (data: any) => (dispatch: any) => {
   dispatch({ type: CREATE_RESPONSE_R });
+  // console.log(data);
   apiClientService
     .post("api/respond/", data, {
       headers: {

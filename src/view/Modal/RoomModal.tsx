@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CircularProgress, Dialog, TextField } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress, Dialog, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useDebounce from "@src/hooks/useDebounce";
@@ -20,6 +20,15 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: "column",
     padding: "0 1em 1em",
   },
+  header: {
+    width: "100%",
+    textAlign: "start",
+    fontFamily: "Wendy One",
+    marginBottom: 0,
+    marginTop: "0.5em",
+    fontSize: "2.5em",
+    color: theme.palette.primary.dark,
+  },
   card: {
     display: "flex",
     justifyContent: "center",
@@ -28,12 +37,14 @@ const useStyles = makeStyles()((theme) => ({
   },
   cardActions: {
     display: "flex",
-    justifyContent: "flex-end",
+    width: "93%",
+    justifyContent: "space-between",
     flexDirection: "row",
+    padding: "10px 20px",
   },
   button: {
-    width: "107px",
-    height: "42px",
+    width: "137px",
+    height: "52px",
   },
 }));
 
@@ -94,15 +105,16 @@ export const RoomModal = () => {
       <form onSubmit={handleSubmit}>
         <Card className={classes.root}>
           <CardContent className={classes.card}>
-            <h2>Please provide your {isJoin ? "room ID" : "room name"}</h2>
+            <h1 className={classes.header}>{isJoin ? "Join lobby" : "Create lobby"}</h1>
+            <h2>Please provide {isJoin ? "room ID to join the existed lobby" : "name of your best party"}</h2>
             <TextField
               variant={"outlined"}
               value={isJoin ? formState.roomID : formState.roomName}
               name={isJoin ? "roomID" : "roomName"}
-              label={isJoin ? "Room ID" : "Room name"}
+              label={isJoin ? "Lobby ID" : "Lobby name"}
               size={"medium"}
               error={isJoin && errorDebounced}
-              helperText={isJoin && errorDebounced && "Incorrect room ID"}
+              helperText={isJoin && errorDebounced && "Incorrect lobby ID"}
               onChange={handleChange}
               fullWidth
               InputLabelProps={{
